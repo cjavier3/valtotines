@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Be My Valentine 💘</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #ffdee9, #b5fffc);
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px 160px;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 15px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.pickup-line {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  min-height: 2.5em;
+}
+
+.image-wrapper {
+  position: relative;
+  margin: 30px auto;
+  max-width: 420px;
+  cursor: pointer;
+}
+
+.image-wrapper img {
+  width: 100%;
+  border-radius: 25px;
+  border: 6px solid white;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+}
+
+.glow {
+  position: absolute;
+  inset: -15px;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #ff5f9e, #ffd86f, #7cf6ff);
+  filter: blur(35px);
+  z-index: -1;
+  animation: pulse 3s infinite;
+}
+
+.buttons {
+  margin-top: 40px;
+  position: relative;
+  height: 120px;
+}
+
+button {
+  font-size: 1.4rem;
+  padding: 16px 36px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  position: absolute;
+}
+
+.yes-btn {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.no-btn {
+  background: #eee;
+  color: #444;
+  right: 20%;
+}
+
+.yes-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #ff7eb3, #ff758c);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  z-index: 9999;
+  text-align: center;
+}
+
+.yes-screen h2 {
+  font-family: 'Pacifico', cursive;
+  font-size: 4rem;
+}
+
+.yes-screen p {
+  font-size: 1.4rem;
+  margin-top: 15px;
+}
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: rise 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+@keyframes float {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- 🔊 Background Music -->
+<audio id="bgMusic" src="love.mp3" loop></audio>
+
+<div class="container">
+  <h1>Hey Sarah 💖</h1>
+  <div class="subtitle">From Chris (and our tiny Valentine 👶)</div>
+
+  <div class="pickup-line" id="pickupLine"></div>
+
+  <div class="image-wrapper" onclick="babyHearts(event)">
+    <div class="glow"></div>
+    <img src="IMG_4386.jpeg" alt="Valentine moment">
+  </div>
+
+  <div class="buttons">
+    <button class="yes-btn" onclick="sayYes()">YES 💘</button>
+    <button class="no-btn" id="noBtn">No 😅</button>
+  </div>
+</div>
+
+<!-- 💥 YES SCREEN -->
+<div class="yes-screen" id="yesScreen">
+  <h2>She said YES 💍</h2>
+  <p>📸 Screen record this moment forever</p>
+</div>
+
+<script>
+/* ✍️ PERSONALIZE HERE */
+const pickupLines = [
+  "Are you my forever Valentine? Asking for my heart.",
+  "Even Cupid knows I already won.",
+  "This was rigged from the start… in my favor.",
+  "You, me, and this little cutie = my whole world."
+];
+
+/* 🎶 Music Autoplay */
+const music = document.getElementById("bgMusic");
+document.addEventListener("click", () => music.play(), { once: true });
+
+/* 💬 Pickup Lines */
+let i = 0;
+const lineEl = document.getElementById("pickupLine");
+setInterval(() => {
+  lineEl.textContent = pickupLines[i];
+  i = (i + 1) % pickupLines.length;
+}, 3000);
+lineEl.textContent = pickupLines[0];
+
+/* 🏃‍♂️ NO Button Runs Away */
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.style.left = Math.random() * 70 + "%";
+  noBtn.style.top = Math.random() * 60 + "px";
+});
+
+/* 👶 Baby Tap Hearts */
+function babyHearts(e) {
+  for (let i = 0; i < 12; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💖";
+    heart.style.left = e.clientX + Math.random()*40 - 20 + "px";
+    heart.style.bottom = "20px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }
+}
+
+/* 💥 YES MOMENT */
+function sayYes() {
+  document.getElementById("yesScreen").style.display = "flex";
+  for (let i = 0; i < 50; i++) babyHearts({ clientX: window.innerWidth/2 });
+}
+</script>
+
+</body>
+</html>
